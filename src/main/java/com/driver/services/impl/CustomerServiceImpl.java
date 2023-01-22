@@ -14,7 +14,6 @@ import com.driver.repository.TripBookingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -48,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 		List<Driver> drivers=driverRepository2.findAll();
 		int driverId =Integer.MAX_VALUE;
 		for(Driver driver:drivers){
-			if(driver.getDriverId() < driverId && driver.getCab().isAvailable()){
+			if(driver.getDriverId() < driverId && driver.getCab().getAvailable()){
 				driverId =driver.getDriverId();
 				}
 			}
@@ -61,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
 		TripBooking tripBooked=new TripBooking(fromLocation,toLocation,distanceInKm,rate);
 		tripBooked.setDriver(driver);
 		tripBooked.setCustomer(customer);
-		tripBooked.setTripStatus(TripStatus.CONFIRMED);
+		tripBooked.setStatus(TripStatus.CONFIRMED);
 		driver.getCab().setAvailable(false);
 		List<TripBooking> driverTrips=driver.getTripBookingList();
 		List<TripBooking> customerTrips=customer.getTripBookingList();
@@ -88,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer=bookedTrip.getCustomer();
 		Driver driver=bookedTrip.getDriver();
 		driver.getCab().setAvailable(true);
-		bookedTrip.setTripStatus(TripStatus.CANCELED);
+		bookedTrip.setStatus(TripStatus.CANCELED);
 		driverRepository2.save(driver);
 		customerRepository2.save(customer);
 		tripBookingRepository2.save(bookedTrip);
@@ -101,7 +100,7 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer customer=bookedTrip.getCustomer();
 		Driver driver=bookedTrip.getDriver();
 		driver.getCab().setAvailable(true);
-		bookedTrip.setTripStatus(TripStatus.COMPLETED);
+		bookedTrip.setStatus(TripStatus.COMPLETED);
 		driverRepository2.save(driver);
 		customerRepository2.save(customer);
 		tripBookingRepository2.save(bookedTrip);
