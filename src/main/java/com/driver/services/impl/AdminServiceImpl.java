@@ -50,15 +50,13 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Driver> getListOfDrivers() {
 		//Find the list of all drivers
-		List<Driver> drivers= driverRepository1.findAll();
-		return drivers;
+		return driverRepository1.findAll();
 	}
 
 	@Override
 	public List<Customer> getListOfCustomers() {
 		//Find the list of all customers
-		List<Customer> customers=customerRepository1.findAll();
-		return customers;
+		return customerRepository1.findAll();
 	}
 
 }
